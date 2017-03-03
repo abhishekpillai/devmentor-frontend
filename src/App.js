@@ -8,7 +8,13 @@ import './App.css';
 const getMentorships = gql`
   query getMentorships{
     mentorships {
-      text
+      id
+      mentor {
+        name
+      }
+      mentee {
+        name
+      }
     }
   }
 `;
@@ -19,10 +25,8 @@ const Mentorship = ({mentorship}) => (
 
 class App extends Component {
   render() {
-    // this.props.data.mentorships.map((mentorship) => {
-    //     return (<Mentorship mentorship={mentorship} />);
-    //   })
-    console.log(this.props);
+    const { mentorships } = this.props.data;
+
     return (
       <div className="App">
         <div className="App-header">
@@ -33,6 +37,11 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <h2>Mentorships</h2>
+        {
+          mentorships && mentorships.map((mentorship, index) => {
+            return (<Mentorship key={index} mentorship={mentorship} />);
+          })
+        }
       </div>
     );
   }
