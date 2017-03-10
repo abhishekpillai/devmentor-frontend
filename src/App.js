@@ -15,12 +15,28 @@ const getMentorships = gql`
       mentee {
         name
       }
+      actionItems {
+        title
+        owner {
+          name
+        }
+      }
     }
   }
 `;
 
 const Mentorship = ({mentorship}) => (
-  <li>{mentorship.mentor.name} + {mentorship.mentee.name}</li>
+  <li>
+    {mentorship.mentor.name} + {mentorship.mentee.name}
+    <ul>
+      <h3>Action Items</h3>
+      {
+        mentorship.actionItems.map((ai) => {
+          return (<li>{ai.title} - {ai.owner.name}</li>);
+        })
+      }
+    </ul>
+  </li>
 );
 
 class App extends Component {
@@ -31,11 +47,8 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React, Abhi</h2>
+          <h2>Welcome to DevMentor</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         <h2>Mentorships</h2>
         {
           mentorships && mentorships.map((mentorship, index) => {
